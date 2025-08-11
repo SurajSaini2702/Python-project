@@ -3,6 +3,7 @@ from mysql.connector import MySQLConnection, Error
 import tkinter as tk
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 conn = mysql.connector.connect(host="localhost",database="student",user="root",password="1234")
 
 def stu_records():
@@ -19,9 +20,27 @@ def stu_records():
         def submit_button():
             query = f"insert into stu_records(adm_no,name,age,class,dad_name,mom_name) values ('{E1.get()}', '{E2.get()}', '{E3.get()}', '{E4.get()}', '{E5.get()}', '{E6.get()}')"
             cursor=conn.cursor()
-            cursor.execute(query)
-            conn.commit()
-            print("Record entered successfully")
+            try:
+                cursor.execute(query)
+                conn.commit()
+                messagebox.showinfo("Success", "Record entered successfully!")
+            except mysql.connector.IntegrityError as e:
+                messagebox.showerror(
+                    "Integrity Error",
+                    f"{e}\n\nPossible solution:\n- Check if Admission Number already exists."
+                )
+            except mysql.connector.ProgrammingError as e:
+                messagebox.showerror("Programming Error",
+                f"{e}\n\nPossible solution:\n- Check your SQL syntax.\n- Verify table and column names."
+                )
+            except mysql.connector.DatabaseError as e:
+                messagebox.showerror("Database Error",
+                    f"{e}\n\nPossible solution:\n- Check database connection.\n- Verify data types."
+                )
+            except Exception as e:
+                messagebox.showerror("Unknown Error",
+                f"{e}\n\nPossible solution:\n- Contact support or check logs."
+            )
                 
         b1 = Button(top,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
         b2 = Button(top, text = "Submit",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -78,9 +97,29 @@ def stu_records():
             def submit_button():
                 query = f"UPDATE stu_records SET name = '{E1.get()}' WHERE adm_no = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(win,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(win, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -111,9 +150,29 @@ def stu_records():
             def submit_button():
                 query = f"UPDATE stu_records SET age = '{E2.get()}' WHERE adm_no = '{E1.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(we,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(we, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -144,9 +203,29 @@ def stu_records():
             def submit_button():
                 query = f"UPDATE stu_records SET class = '{E3.get()}' WHERE adm_no = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wen,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wen, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -177,9 +256,29 @@ def stu_records():
             def submit_button():
                 query = f"UPDATE stu_records SET dad_name = '{E3.get()}' WHERE adm_no = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wenf,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wenf, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -211,9 +310,29 @@ def stu_records():
             def submit_button():
                 query = f"UPDATE stu_records SET mom_name = '{E3.get()}' WHERE adm_no = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wenm,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wenm, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -357,9 +476,28 @@ def stu_fees():
         def submit_button():
             query = f"insert into stu_fees(receipt_no,month,amount,adm_no) values ('{E1.get()}', '{E2.get()}', '{E3.get()}', '{E4.get()}')"
             cursor=conn.cursor()
-            cursor.execute(query)
-            conn.commit()
-            print("Record entered successfully")
+            try:
+                cursor.execute(query)
+                conn.commit()
+                messagebox.showinfo("Success", "Record entered successfully!")
+            except mysql.connector.IntegrityError as e:
+                messagebox.showerror("Integrity Error",
+                    f"{e}\n\nPossible solution:\n- Check if Admission Number already exists."
+                )
+            except mysql.connector.ProgrammingError as e:
+                messagebox.showerror(
+                    "Programming Error",
+                    f"{e}\n\nPossible solution:\n- Check your SQL syntax.\n- Verify table and column names."
+                )
+            except mysql.connector.DatabaseError as e:
+                messagebox.showerror(
+                    "Database Error",
+                    f"{e}\n\nPossible solution:\n- Check database connection.\n- Verify data types."
+                )
+            except Exception as e:
+                messagebox.showerror("Unknown Error",
+                    f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                )
                 
         b1 = Button(top,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
         b2 = Button(top, text = "Submit",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -403,9 +541,29 @@ def stu_fees():
             def submit_button():
                 query = f"UPDATE stu_fees SET month = '{E1.get()}' WHERE receipt_no = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(win,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(win, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -436,9 +594,29 @@ def stu_fees():
             def submit_button():
                 query = f"UPDATE stu_fees SET amount = '{E2.get()}' WHERE receipt_no = '{E1.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(we,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(we, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -469,9 +647,30 @@ def stu_fees():
             def submit_button():
                 query = f"UPDATE stu_fees SET adm_no = '{E1.get()}' WHERE receipt_no = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning(
+                            "No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wen,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wen, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -629,9 +828,26 @@ def stu_marks():
                 grade = 'F'
             query = f"insert into stu_marks1(pid,semester,roll_no,english,maths,science,hindi,ict,total,percentage,grade,adm_no) values ('{E1.get()}', '{E2.get()}', '{E3.get()}', '{E4.get()}', '{E5.get()}', '{E6.get()}', '{E7.get()}', '{total}', '{perc}', '{grade}', '{E8.get()}')"
             cursor=conn.cursor()
-            cursor.execute(query)
-            conn.commit()
-            print("Record entered successfully")
+            try:
+                cursor.execute(query)
+                conn.commit()
+                messagebox.showinfo("Success", "Record entered successfully!")
+            except mysql.connector.IntegrityError as e:
+                messagebox.showerror("Integrity Error",
+                    f"{e}\n\nPossible solution:\n- Check if Admission Number already exists."
+                )
+            except mysql.connector.ProgrammingError as e:
+                messagebox.showerror("Programming Error",
+                    f"{e}\n\nPossible solution:\n- Check your SQL syntax.\n- Verify table and column names."
+                )
+            except mysql.connector.DatabaseError as e:
+                messagebox.showerror("Database Error",
+                    f"{e}\n\nPossible solution:\n- Check database connection.\n- Verify data types."
+                )
+            except Exception as e:
+                messagebox.showerror("Unknown Error",
+                    f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                )
                 
         b1 = Button(top,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
         b2 = Button(top, text = "Submit",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -711,9 +927,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET semester = '{E1.get()}' WHERE pid = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wik,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wik, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -744,9 +980,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET roll_no = '{E1.get()}' WHERE pid = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(win,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(win, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -777,9 +1033,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET english = '{E1.get()}' WHERE pid = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(we,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(we, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -810,9 +1086,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET maths = '{E1.get()}' WHERE PID = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wen,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wen, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -843,9 +1139,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET science = '{E1.get()}' WHERE PID = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(weh,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(weh, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -876,9 +1192,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET hindi = '{E1.get()}' WHERE PID = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wenw,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wenw, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -909,9 +1245,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET ict = '{E1.get()}' WHERE PID = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wenwc,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wenwc, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -942,9 +1298,29 @@ def stu_marks():
             def submit_button():
                 query = f"UPDATE stu_marks1 SET adm_no = '{E1.get()}' WHERE PID = '{E2.get()}'"
                 cursor=conn.cursor()
-                cursor.execute(query)
-                conn.commit()
-                print("Record updated successfully")
+                try:
+                    cursor.execute(query)
+                    conn.commit()
+                    
+                    if cursor.rowcount == 0:
+                        messagebox.showwarning("No Change",
+                            "No record was updated.\n\nPossible solution:\n- Check if the Admission Number exists."
+                        )
+                    else:
+                        messagebox.showinfo("Success", "Record updated successfully!")
+                
+                except mysql.connector.ProgrammingError as e:
+                    messagebox.showerror("Programming Error",
+                        f"{e}\n\nPossible solution:\n- Check SQL syntax or column names."
+                    )
+                except mysql.connector.DatabaseError as e:
+                    messagebox.showerror("Database Error",
+                        f"{e}\n\nPossible solution:\n- Check the database connection.\n- Check data types."
+                    )
+                except Exception as e:
+                    messagebox.showerror("Unknown Error",
+                        f"{e}\n\nPossible solution:\n- Contact support or check logs."
+                    )
 
             b1 = Button(wenwa,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
             b2 = Button(wenwa, text = "Update",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
@@ -999,9 +1375,23 @@ def stu_marks():
         def submit_button():
             query = f"DELETE FROM stu_marks1 WHERE pid = '{E1.get()}'"
             cursor=conn.cursor()
-            cursor.execute(query)
-            conn.commit()
-            print("Record deleted successfully")
+            try:
+                cursor.execute(query)
+                conn.commit()
+                
+                if cursor.rowcount == 0:
+                    messagebox.showwarning(
+                        "No Record Deleted",
+                        "No record was deleted.\n\nPossible solution:\n- Check if the admission number exists."
+                    )
+                else:
+                    messagebox.showinfo("Deleted", "Record deleted successfully!")
+                    
+            except mysql.connector.Error as e:
+                messagebox.showerror(
+                    "Database Error",
+                    f"{e}\n\nPossible solution:\n- Check table name.\n- Check admission number exists."
+                )
 
         b1 = Button(de,text = "Reset",command = reset_button,activeforeground = "red",activebackground = "blue",pady=10)
         b2 = Button(de, text = "Delete",command = submit_button,activeforeground = "red",activebackground = "blue",pady=10)
